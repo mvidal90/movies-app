@@ -1,10 +1,12 @@
 import { Box, Container } from "@mui/material";
+import { MoviesGrid } from "@/components";
 
 export default function Home() {
     return (
         <Box component="main" sx={{ marginTop: "1rem" }}>
             <Container>
-                <Box component="h2">Busca tu pelicula favorita</Box>
+                <Box component="h2" sx={{ marginBottom: "1rem"}}>Busca tu pelicula favorita</Box>
+                <MoviesGrid />
             </Container>
         </Box>
     );
