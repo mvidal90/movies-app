@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import {reducer as moviesReducer, INITIAL_STATE as initialStateMovies} from './movies/moviesReducer'
+import {reducer as moviesReducer, INITIAL_STATE as initialStateMovies} from './movies/reducer'
 
 const reducer = {
     movies: moviesReducer,
