@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
+import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Grid, Skeleton } from '@mui/material'
@@ -23,35 +24,14 @@ export const MoviesGrid = () => {
                     moviesList.list.map(
                         movie =>
                             <Grid key={movie.id} item xs={12} md={4} lg={3}>
-                                <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="" width={"100%"} />
+                                <Link href={`/detail/${movie.id}`}>
+                                    <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="" width={"100%"} />
+                                </Link>
                             </Grid>
                     )
                 :
                     <>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Skeleton variant="rectangular" width={"100%"} height={400} />
-                        </Grid>
+                        "Loading..."
                     </>
             }
 
