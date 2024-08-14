@@ -14,8 +14,8 @@ const axiosInstance = axios.create({
     }
 })
 
-export const getMovies = async () => {
-    const resp = await axiosInstance.get("/discover/movie")
+export const getMovies = async (page: number) => {
+    const resp = await axiosInstance.get("/discover/movie", {params: {page}})
     return resp.data;
 }
 

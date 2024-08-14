@@ -43,8 +43,3 @@ export const reducer = createReducer(INITIAL_STATE, (builder) => {
         )
 
 })
-
-export const actions = {
-    resetAction,
-    getListMovies
-}

@@ -6,8 +6,8 @@ export const resetAction = createAction('movies/RESET_STATE')
 
 export const getListMovies = createAsyncThunk(
     'movies/GET_MOVIES_LIST',
-    async () => {
-        const data = await getMovies()
+    async (page: number) => {
+        const data = await getMovies(page)
         return data
     },
 )
