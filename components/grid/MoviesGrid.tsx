@@ -18,12 +18,12 @@ export const MoviesGrid = () => {
     }, [])
     
     return (
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             {
                 !fetching ?
                     moviesList.list.map(
                         movie =>
-                            <Grid key={movie.id} item xs={12} md={4} lg={3}>
+                            <Grid key={movie.id} item xs={12} sm={6} md={4} lg={3}>
                                 <Link href={`/detail/${movie.id}`}>
                                     <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt="" width={"100%"} />
                                 </Link>
