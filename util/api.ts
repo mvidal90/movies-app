@@ -19,6 +19,11 @@ export const getMovies = async (page: number) => {
     return resp.data;
 }
 
+export const getMovieById = async (id: string) => {
+    const resp = await axiosInstance.get(`/movie/${id}`)
+    return resp.data;
+}
+
 export const getGenres = async () => {
     const resp = await axiosInstance.get("/genre/movie/list")
     return resp.data;

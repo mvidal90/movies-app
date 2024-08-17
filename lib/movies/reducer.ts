@@ -2,7 +2,7 @@ import {
     createReducer,
 } from '@reduxjs/toolkit'
 
-import { getListMovies, resetAction } from './actions'
+import { getListMovies, getMovieDetail, resetAction } from './actions'
 import { MoviesState } from './types'
 
 export const INITIAL_STATE: MoviesState = {
@@ -26,6 +26,10 @@ export const reducer = createReducer(INITIAL_STATE, (builder) => {
                 page: action.payload.page,
                 totalPages: action.payload.total_pages,
             }
+        }))
+        .addCase(getMovieDetail.fulfilled, (state, action) => ({
+            ...state,
+            movieDetail: action.payload
         }))
         .addMatcher(
             (action) => action.type.endsWith('/pending'),
