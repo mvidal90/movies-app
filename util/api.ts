@@ -13,12 +13,17 @@ const axiosInstance = axios.create({
         Authorization: `Bearer ${vars.TMDB_API_KEY}`
     }
 })
-export const getMovies = async (params:any, page: number) => {
+export const getMovies = async (params:{
+    "vote_average.gte": number
+    "vote_average.lte": number
+    with_genres: string
+    primary_release_year: number | null
+}, page: number) => {
     const resp = await axiosInstance.get("/discover/movie", {params: {...params, page}})
     return resp.data;
 }
 
-export const getSearchMovies = async (params:any, page: number) => {
+export const getSearchMovies = async (params: {query: string}, page: number) => {
     const resp = await axiosInstance.get("/search/movie", {params: {...params, page}})
     return resp.data;
 }

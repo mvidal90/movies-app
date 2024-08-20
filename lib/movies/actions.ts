@@ -4,8 +4,13 @@ import { getMovies, getSearchMovies, getMovieById, getGenres } from "@/util/api"
 import { RootState } from "../store"
 
 export const resetAction = createAction('movies/RESET_STATE')
-export const setParams = createAction<any>('movies/SET_PARAMS')
-export const setSearchBy = createAction<any>('movies/SET_SEARCH_BY')
+export const setParams = createAction<{
+    "vote_average.gte"?: number
+    "vote_average.lte"?: number
+    with_genres?: string
+    primary_release_year?: number | null
+}>('movies/SET_PARAMS')
+export const setSearchBy = createAction<string>('movies/SET_SEARCH_BY')
 
 export const getListMovies = createAsyncThunk(
     'movies/GET_MOVIES_LIST',
