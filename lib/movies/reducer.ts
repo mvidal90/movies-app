@@ -2,7 +2,7 @@ import {
     createReducer,
 } from '@reduxjs/toolkit'
 
-import { getListGenres, getListMovies, getMovieDetail, resetAction, setParams } from './actions'
+import { getFoundMovies, getListGenres, getListMovies, getMovieDetail, resetAction, setParams, setSearchBy } from './actions'
 import { MoviesState } from './types'
 
 export const INITIAL_STATE: MoviesState = {
@@ -13,6 +13,10 @@ export const INITIAL_STATE: MoviesState = {
         list: [],
         page: 0,
         totalPages: 0
+    },
+    searchBy: {
+        query: "",
+        enabled: false
     },
     params: {
         "vote_average.gte": 0,
@@ -32,12 +36,35 @@ export const reducer = createReducer(INITIAL_STATE, (builder) => {
                 ...action.payload
             }
         }))
+        .addCase(setSearchBy, (state, action) => ({
+            ...state,
+            searchBy: {
+                ...state.searchBy,
+                query: action.payload
+            }
+        }))
         .addCase(getListMovies.fulfilled, (state, action) => ({
             ...state,
             moviesList: {
                 list: action.payload.results,
                 page: action.payload.page,
                 totalPages: action.payload.total_pages,
+            },
+            searchBy: {
+                query: "",
+                enabled: false
+            }
+        }))
+        .addCase(getFoundMovies.fulfilled, (state, action) => ({
+            ...state,
+            moviesList: {
+                list: action.payload.results,
+                page: action.payload.page,
+                totalPages: action.payload.total_pages,
+            },
+            searchBy: {
+                ...state.searchBy,
+                enabled: true
             }
         }))
         .addCase(getMovieDetail.fulfilled, (state, action) => ({
@@ -50,14 +77,14 @@ export const reducer = createReducer(INITIAL_STATE, (builder) => {
         }))
         .addMatcher(
             (action) => action.type.endsWith('/pending'),
-            (state, action) => ({
+            (state) => ({
                 ...state,
                 fetching: true
             })
         )
         .addMatcher(
             (action) => !action.type.endsWith('/pending'),
-            (state, action) => ({
+            (state) => ({
                 ...state,
                 fetching: false
             })

@@ -18,6 +18,11 @@ export const getMovies = async (params:any, page: number) => {
     return resp.data;
 }
 
+export const getSearchMovies = async (params:any, page: number) => {
+    const resp = await axiosInstance.get("/search/movie", {params: {...params, page}})
+    return resp.data;
+}
+
 export const getMovieById = async (id: string) => {
     const resp = await axiosInstance.get(`/movie/${id}`)
     return resp.data;

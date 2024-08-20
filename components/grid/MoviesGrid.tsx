@@ -9,11 +9,11 @@ import GridScheleton from './GridScheleton'
 import Pagination from '../pagination/Pagination'
 
 import { AppDispatch, RootState } from '@/lib/store'
-import { getListMovies } from '@/lib/movies/actions'
+import { getFoundMovies, getListMovies } from '@/lib/movies/actions'
 import { MoviesState } from '@/lib/movies/types'
 
 export const MoviesGrid = () => {
-    const { moviesList, fetching } = useSelector<RootState>( state => state.movies) as MoviesState
+    const { moviesList, fetching, searchBy } = useSelector<RootState>( state => state.movies) as MoviesState
     const dispatch = useDispatch<AppDispatch>()
     
     useEffect(() => {
@@ -45,7 +45,15 @@ export const MoviesGrid = () => {
             <Pagination 
                 currentPage={moviesList.page} 
                 totalPages={moviesList.totalPages} 
-                setNewPage={(page: number) => dispatch(getListMovies(page))}/>
+                setNewPage={
+                    (page: number) => 
+                        dispatch( 
+                            !searchBy.enabled ? 
+                                getListMovies(page)
+                            : 
+                                getFoundMovies(page)
+                        )
+                }/>
         </Grid>
     )
 };
