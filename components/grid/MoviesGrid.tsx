@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Box, Grid } from '@mui/material'
 
+import GridScheleton from './GridScheleton'
 import Pagination from '../pagination/Pagination'
 
 import { AppDispatch, RootState } from '@/lib/store'
 import { getListMovies } from '@/lib/movies/actions'
 import { MoviesState } from '@/lib/movies/types'
-import GridScheleton from './GridScheleton'
 
 export const MoviesGrid = () => {
     const { moviesList, fetching } = useSelector<RootState>( state => state.movies) as MoviesState
