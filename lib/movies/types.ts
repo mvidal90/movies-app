@@ -9,4 +9,10 @@ export interface MoviesState {
         page: number,
         totalPages: number
     },
+    params: {
+        "vote_average.gte": number
+        "vote_average.lte": number
+        with_genres: string
+        primary_release_year: number | null
+    }
 }

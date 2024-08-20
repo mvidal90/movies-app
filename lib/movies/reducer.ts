@@ -2,7 +2,7 @@ import {
     createReducer,
 } from '@reduxjs/toolkit'
 
-import { getListMovies, getMovieDetail, resetAction } from './actions'
+import { getListGenres, getListMovies, getMovieDetail, resetAction, setParams } from './actions'
 import { MoviesState } from './types'
 
 export const INITIAL_STATE: MoviesState = {
@@ -14,11 +14,24 @@ export const INITIAL_STATE: MoviesState = {
         page: 0,
         totalPages: 0
     },
+    params: {
+        "vote_average.gte": 0,
+        "vote_average.lte": 10,
+        with_genres: "",
+        primary_release_year: null
+    }
 }
 
 export const reducer = createReducer(INITIAL_STATE, (builder) => {
     builder
         .addCase(resetAction, () => INITIAL_STATE)
+        .addCase(setParams, (state, action) => ({
+            ...state,
+            params: {
+                ...state.params,
+                ...action.payload
+            }
+        }))
         .addCase(getListMovies.fulfilled, (state, action) => ({
             ...state,
             moviesList: {
@@ -30,6 +43,10 @@ export const reducer = createReducer(INITIAL_STATE, (builder) => {
         .addCase(getMovieDetail.fulfilled, (state, action) => ({
             ...state,
             movieDetail: action.payload
+        }))
+        .addCase(getListGenres.fulfilled, (state, action) => ({
+            ...state,
+            genres: action.payload.genres
         }))
         .addMatcher(
             (action) => action.type.endsWith('/pending'),

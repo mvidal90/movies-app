@@ -7,15 +7,14 @@ const vars = {
 
 const axiosInstance = axios.create({
     baseURL: vars.REACT_APP_TMDB_BASE_URL_API,
-    params: { language: "es_LA" },
+    params: { language: "es" },
     headers: {
         accept: 'application/json',
         Authorization: `Bearer ${vars.TMDB_API_KEY}`
     }
 })
-
-export const getMovies = async (page: number) => {
-    const resp = await axiosInstance.get("/discover/movie", {params: {page}})
+export const getMovies = async (params:any, page: number) => {
+    const resp = await axiosInstance.get("/discover/movie", {params: {...params, page}})
     return resp.data;
 }
 
