@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { AppDispatch } from '@/lib/store';
 import { getFoundMovies, setSearchBy } from '@/lib/movies/actions';
 
-const Searcher = () => {
+export const Searcher = () => {
 
     const dispatch = useDispatch<AppDispatch>()
     return (
@@ -37,5 +37,3 @@ const Searcher = () => {
         </Paper>
     )
 }
-
-export default Searcher

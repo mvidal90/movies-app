@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
 
-import Navbar from "@/components/navbar/Navbar";
-
+import { Navbar } from "@/components";
 import StoreProvider from "./StoreProvider";
 
 import theme from "@/theme";

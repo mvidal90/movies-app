@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
         Authorization: `Bearer ${vars.TMDB_API_KEY}`
     }
 })
-export const getMovies = async (params:{
+export const getMovies = async (params: {
     "vote_average.gte": number
     "vote_average.lte": number
     with_genres: string

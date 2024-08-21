@@ -19,6 +19,12 @@ export const MoviesGrid = () => {
     useEffect(() => {
         dispatch(getListMovies(1))
     }, [])
+
+    useEffect(() => {
+        if (moviesList.page) {
+            window.scroll({top: 0, behavior: "smooth",})
+        }
+    }, [moviesList.page])
     
     return (
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -31,7 +37,7 @@ export const MoviesGrid = () => {
                                     <Box 
                                         component="img" 
                                         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} 
-                                        alt="" 
+                                        alt={movie.title} 
                                         sx={{
                                             width: "100%",
                                             minHeight: 400

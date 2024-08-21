@@ -39,6 +39,9 @@ const theme = createTheme({
             h6 {
                 font-size: 1rem;
             },
+            a {
+                text-decoration: none
+            }
           `,
         },
     },
