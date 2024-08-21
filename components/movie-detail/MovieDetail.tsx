@@ -12,6 +12,8 @@ import { MoviesState } from '@/lib/movies/types';
 import { AppDispatch, RootState } from '@/lib/store';
 
 import theme from '@/theme';
+import { MoviesGrid } from '../grid/MoviesGrid';
+import GridScheleton from '../grid/GridScheleton';
 
 interface MovieDetailProps {
     id: string
@@ -27,129 +29,148 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
     }, [id])
     
     return (
-        <Grid container spacing={4} direction={isMobile ? "column-reverse" : "row"}>
-            <Grid item xs={12} md={6} lg={8} sx={{ marginTop: isMobile ? "2rem" : 0 }}>
-                <Box component="h2" sx={{ marginBottom: "1rem"}}>
+        <>
+            <Grid container spacing={4} direction={isMobile ? "column-reverse" : "row"}>
+                <Grid item xs={12} md={6} lg={8} sx={{ marginTop: isMobile ? "2rem" : 0 }}>
+                    <Box component="h2" sx={{ marginBottom: "1rem"}}>
+                        {
+                            fetching ?
+                                <Skeleton />
+                            :
+                                movieDetail?.title
+                        }
+                    </Box>
+                    <Box sx={{ marginBottom: "1rem", display: "flex"}}>
+                        {
+                            fetching ?
+                                <>
+                                    <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
+                                    <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
+                                    <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
+                                    <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
+                                </>
+                            :
+                            movieDetail?.genres?.map(
+                                genre => 
+                                    <Chip 
+                                        key={genre.id} 
+                                        label={genre.name} 
+                                        color="primary" 
+                                        variant="outlined"
+                                        sx={{ m: "0.5rem" }} />
+                            )
+                        }
+                    </Box>
+                    <Box component="p" sx={{ marginBottom: "1rem"}}>
+                        {
+                            fetching ?
+                                <Skeleton sx={{ height: "15rem" }} />
+                            :
+                                movieDetail?.overview
+                        }
+                    </Box>
+                    <Box sx={{ 
+                        borderRadius: "1rem",
+                        border: `1px solid ${theme.palette.primary.dark}`,
+                        marginBottom: "1rem", 
+                        p: !isMobile ? "3rem" : "2rem 0.5rem"
+                    }}>
+                        <Grid container spacing={!isMobile ? 4 : 2}>
+                            <Grid item xs={6}>
+                                {
+                                    fetching ?
+                                        <Skeleton sx={{ height: "1.5rem" }} />
+                                    :
+                                        <Box sx={{ display: "flex" }}>
+                                            <CalendarIcon sx={{ marginRight: "1rem" }}/>
+                                            <Box component={"p"}>{moment(movieDetail?.release_date).format("DD/MM/YYYY")}</Box>
+                                        </Box>
+                                }
+                            </Grid>
+                            <Grid item xs={6}>
+                                {
+                                    fetching ?
+                                        <Skeleton sx={{ height: "1.5rem" }} />
+                                    :
+                                    <Box sx={{ display: "flex" }}>
+                                        <StarRate sx={{ marginRight: "1rem" }}/>
+                                        <Box component={"p"}>{movieDetail?.vote_average?.toFixed(2)}</Box>
+                                    </Box>
+                                        
+                                }
+                            </Grid>
+                            <Grid item xs={6}>
+                                {
+                                    fetching ?
+                                        <Skeleton sx={{ height: "1.5rem" }} />
+                                    :
+                                        <Box sx={{ display: "flex" }}>
+                                            <AttachMoney sx={{ marginRight: "1rem" }}/>
+                                            <Box component={"p"}>{
+                                                movieDetail?.budget?.toString()
+                                                    .replace(/\D/g, "")
+                                                    .replace(/([0-9])([0-9]{3})$/, "$1.$2")
+                                                    .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".")
+                                                    .concat(",00")
+                                            }</Box>
+                                        </Box>
+                                }
+                            </Grid>
+                            <Grid item xs={6}>
+                                {
+                                    fetching ?
+                                        <Skeleton sx={{ height: "1.5rem" }} />
+                                    :
+                                        <Box sx={{ display: "flex" }}>
+                                            <Autorenew sx={{ marginRight: "1rem" }}/>
+                                            <Box component={"p"}>{movieDetail?.status}</Box>
+                                        </Box>
+                                }
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} md={6} lg={4} justifyContent="center" alignItems="center" sx={{ display: "flex" }}>
                     {
                         fetching ?
-                            <Skeleton />
+                            <Skeleton 
+                                sx={{
+                                    width: "100%",
+                                    maxWidth: 100 * (isMobile ? 3 : 5),
+                                    height: "100%",
+                                    minHeight: 100 * (isMobile ? 4.5 : 6)
+                                }}
+                            />
                         :
-                            movieDetail?.title
+                            <Box 
+                                component="img" 
+                                src={`https://image.tmdb.org/t/p/w500/${movieDetail?.poster_path}`} 
+                                alt={movieDetail?.title}
+                                sx={{
+                                    width: "100%",
+                                    maxWidth: 100 * (isMobile ? 3 : 5)
+                                }}>
+                            </Box>
                     }
-                </Box>
-                <Box sx={{ marginBottom: "1rem", display: "flex"}}>
-                    {
-                        fetching ?
-                            <>
-                                <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
-                                <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
-                                <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
-                                <Skeleton sx={{ m: "0.5rem", height: "2rem", width: "4rem" }} />
-                            </>
-                        :
-                        movieDetail?.genres?.map(
-                            genre => 
-                                <Chip 
-                                    key={genre.id} 
-                                    label={genre.name} 
-                                    color="primary" 
-                                    variant="outlined"
-                                    sx={{ m: "0.5rem" }} />
-                        )
-                    }
-                </Box>
-                <Box component="p" sx={{ marginBottom: "1rem"}}>
-                    {
-                        fetching ?
-                            <Skeleton sx={{ height: "15rem" }} />
-                        :
-                            movieDetail?.overview
-                    }
-                </Box>
-                <Box sx={{ 
-                    borderRadius: "1rem",
-                    border: `1px solid ${theme.palette.primary.dark}`,
-                    marginBottom: "1rem", 
-                    p: "3rem"
-                }}>
-                    <Grid container spacing={4}>
-                        <Grid item xs={6}>
-                            {
-                                fetching ?
-                                    <Skeleton sx={{ height: "1.5rem" }} />
-                                :
-                                    <Box sx={{ display: "flex" }}>
-                                        <CalendarIcon sx={{ marginRight: "1rem" }}/>
-                                        <Box component={"p"}>{moment(movieDetail?.release_date).format("DD/MM/YYYY")}</Box>
-                                    </Box>
-                            }
-                        </Grid>
-                        <Grid item xs={6}>
-                            {
-                                fetching ?
-                                    <Skeleton sx={{ height: "1.5rem" }} />
-                                :
-                                <Box sx={{ display: "flex" }}>
-                                    <StarRate sx={{ marginRight: "1rem" }}/>
-                                    <Box component={"p"}>{movieDetail?.vote_average?.toFixed(2)}</Box>
-                                </Box>
-                                    
-                            }
-                        </Grid>
-                        <Grid item xs={6}>
-                            {
-                                fetching ?
-                                    <Skeleton sx={{ height: "1.5rem" }} />
-                                :
-                                    <Box sx={{ display: "flex" }}>
-                                        <AttachMoney sx={{ marginRight: "1rem" }}/>
-                                        <Box component={"p"}>{
-                                            movieDetail?.budget?.toString()
-                                                .replace(/\D/g, "")
-                                                .replace(/([0-9])([0-9]{3})$/, "$1.$2")
-                                                .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".")
-                                                .concat(",00")
-                                        }</Box>
-                                    </Box>
-                            }
-                        </Grid>
-                        <Grid item xs={6}>
-                            {
-                                fetching ?
-                                    <Skeleton sx={{ height: "1.5rem" }} />
-                                :
-                                    <Box sx={{ display: "flex" }}>
-                                        <Autorenew sx={{ marginRight: "1rem" }}/>
-                                        <Box component={"p"}>{movieDetail?.status}</Box>
-                                    </Box>
-                            }
-                        </Grid>
-                    </Grid>
-                </Box>
+                </Grid>
             </Grid>
-            <Grid item xs={12} md={6} lg={4} justifyContent="center" alignItems="center" sx={{ display: "flex" }}>
+            <Grid container spacing={4}>
+                <Grid item xs={12}>
+                    <Box component="h2" sx={{ marginBottom: "1rem"}}>
+                        {
+                            fetching ?
+                                <Skeleton />
+                            :
+                                "Te podría interesar"
+                        }
+                    </Box>
+                </Grid>
                 {
                     fetching ?
-                        <Skeleton 
-                            sx={{
-                                width: "100%",
-                                maxWidth: 100 * (isMobile ? 3 : 5),
-                                height: "100%",
-                                minHeight: 100 * (isMobile ? 4.5 : 6)
-                            }}
-                        />
-                    :
-                        <Box 
-                            component="img" 
-                            src={`https://image.tmdb.org/t/p/w500/${movieDetail?.poster_path}`} 
-                            alt={movieDetail?.title}
-                            sx={{
-                                width: "100%",
-                                maxWidth: 100 * (isMobile ? 3 : 5)
-                            }}>
-                        </Box>
+                        <GridScheleton quantity={4} /> :
+                        <MoviesGrid moviesList={movieDetail?.recommendations || []} isMobile={isMobile} />
                 }
             </Grid>
-        </Grid>
+        </>
     )
 }

@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import { MoviesGrid, MoviesListFilters } from "@/components";
+import { MoviesContainer, MoviesListFilters } from "@/components";
 
 export default function Home() {
     return (
@@ -7,7 +7,7 @@ export default function Home() {
             <Container>
                 <Box component="h2" sx={{ marginBottom: "1rem"}}>Busca tu pelicula favorita</Box>
                 <MoviesListFilters />
-                <MoviesGrid />
+                <MoviesContainer />
             </Container>
         </Box>
     );

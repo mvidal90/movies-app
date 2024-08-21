@@ -35,7 +35,18 @@ export const getMovieDetail = createAsyncThunk(
     'movies/GET_MOVIE_DETAIL',
     async (id: string) => {
         const data = await getMovieById(id)
-        return data
+        const dataRecommendations = await getMovies({
+            "vote_average.gte": 7,
+            "vote_average.lte": 10,
+            primary_release_year: null,
+            with_genres: (
+                data?.genres?.map( (obj : {id: number, name: string}) => obj.id).join(",") || ""
+            )
+        }, 1)
+        return {
+            ...data,
+            recommendations: dataRecommendations.results.filter( (movie : any) => movie.id !== data.id).slice(0, 4)
+        }
     },
 )
 

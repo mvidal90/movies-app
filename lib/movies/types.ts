@@ -69,4 +69,22 @@ export interface Movie {
     video: boolean
     vote_average: number
     vote_count: number
+    recommendations: Array<Pick<
+        Movie,
+        'adult' |
+        'backdrop_path' |
+        'id' |
+        'original_language' |
+        'original_title' |
+        'overview' |
+        'popularity' |
+        'poster_path' |
+        'release_date' |
+        'title' |
+        'video' |
+        'vote_average' |
+        'vote_count'
+    > & {
+        'genres_id': Array<number>
+    }>
 }

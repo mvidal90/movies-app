@@ -1,65 +1,51 @@
-"use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { Box, Grid } from '@mui/material'
 
-import GridScheleton from './GridScheleton'
-import Pagination from '../pagination/Pagination'
+import { Movie } from '@/lib/movies/types'
 
-import { AppDispatch, RootState } from '@/lib/store'
-import { getFoundMovies, getListMovies } from '@/lib/movies/actions'
-import { MoviesState } from '@/lib/movies/types'
-
-export const MoviesGrid = () => {
-    const { moviesList, fetching, searchBy } = useSelector<RootState>( state => state.movies) as MoviesState
-    const dispatch = useDispatch<AppDispatch>()
-    
-    useEffect(() => {
-        dispatch(getListMovies(1))
-    }, [])
-
-    useEffect(() => {
-        if (moviesList.page) {
-            window.scroll({top: 0, behavior: "smooth",})
-        }
-    }, [moviesList.page])
-    
+export const MoviesGrid = ({
+    moviesList,
+    isMobile
+} : {
+    moviesList: Array<Pick<
+    Movie,
+    'adult' |
+    'backdrop_path' |
+    'id' |
+    'original_language' |
+    'original_title' |
+    'overview' |
+    'popularity' |
+    'poster_path' |
+    'release_date' |
+    'title' |
+    'video' |
+    'vote_average' |
+    'vote_count'
+> & {
+    'genres_id': Array<number>
+}>, isMobile: boolean}) => {
     return (
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            {
-                !fetching ?
-                    moviesList.list.map(
-                        movie =>
-                            <Grid key={movie.id} item xs={12} sm={6} md={4} lg={3}>
-                                <Link href={`/detail/${movie.id}`}>
-                                    <Box 
-                                        component="img" 
-                                        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} 
-                                        alt={movie.title} 
-                                        sx={{
-                                            width: "100%",
-                                            minHeight: 400
-                                        }} />
-                                </Link>
-                            </Grid>
-                    )
-                :
-                    <GridScheleton />
-            }
-            <Pagination 
-                currentPage={moviesList.page} 
-                totalPages={moviesList.totalPages} 
-                setNewPage={
-                    (page: number) => 
-                        dispatch( 
-                            !searchBy.enabled ? 
-                                getListMovies(page)
-                            : 
-                                getFoundMovies(page)
-                        )
-                }/>
-        </Grid>
+        moviesList?.map(
+            movie =>
+                <Grid key={movie.id} item xs={12} sm={6} md={4} lg={3}
+                    justifyContent={"center"}
+                    sx={{ display: "flex"}} >
+                    <Link href={`/detail/${movie.id}`}>
+                        <Box 
+                            component="img" 
+                            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} 
+                            alt={movie.title} 
+                            sx={{
+                                width: "100%",
+                                minHeight: 400,
+                                maxWidth: 100 * (isMobile ? 3 : 5)
+                            }} />
+                    </Link>
+                </Grid>
+        )
     )
-};
+}
+
