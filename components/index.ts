@@ -1,6 +1,4 @@
 
-
-
 //Clients Components
 export {Navbar} from './navbar/Navbar';
 export {MoviesGrid} from './grid/MoviesGrid';

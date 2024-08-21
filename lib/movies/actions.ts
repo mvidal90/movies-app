@@ -10,6 +10,7 @@ export const setParams = createAction<Partial<{
     with_genres: string
     primary_release_year: number | null
 }>>('movies/SET_PARAMS')
+export const resetParams = createAction('movies/RESET_PARAMS')
 export const setSearchBy = createAction<string>('movies/SET_SEARCH_BY')
 
 export const getListMovies = createAsyncThunk(

@@ -2,13 +2,22 @@ import {
     createReducer,
 } from '@reduxjs/toolkit'
 
-import { getFoundMovies, getListGenres, getListMovies, getMovieDetail, resetAction, setParams, setSearchBy } from './actions'
+import { 
+    getFoundMovies, 
+    getListGenres, 
+    getListMovies, 
+    getMovieDetail, 
+    resetAction, 
+    resetParams, 
+    setParams, 
+    setSearchBy 
+} from './actions'
 import { MoviesState } from './types'
 
 export const INITIAL_STATE: MoviesState = {
     fetching: true,
     genres: [],
-    movieDetail: {},
+    movieDetail: null,
     moviesList: {
         list: [],
         page: 0,
@@ -35,6 +44,10 @@ export const reducer = createReducer(INITIAL_STATE, (builder) => {
                 ...state.params,
                 ...action.payload
             }
+        }))
+        .addCase(resetParams, (state) => ({
+            ...state,
+            params: INITIAL_STATE.params
         }))
         .addCase(setSearchBy, (state, action) => ({
             ...state,

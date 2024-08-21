@@ -3,8 +3,8 @@
 export interface MoviesState {
     fetching: Boolean,
     genres: Array<{id: number, name: string}>,
-    movieDetail: Movie
-    moviesList: {
+    movieDetail: Movie | null
+    moviesList: { 
         list: Array<Pick<
             Movie,
             'adult' |
