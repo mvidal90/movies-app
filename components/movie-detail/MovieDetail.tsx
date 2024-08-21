@@ -34,7 +34,7 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                         fetching ?
                             <Skeleton />
                         :
-                            movieDetail.title
+                            movieDetail?.title
                     }
                 </Box>
                 <Box sx={{ marginBottom: "1rem", display: "flex"}}>
@@ -63,7 +63,7 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                         fetching ?
                             <Skeleton sx={{ height: "15rem" }} />
                         :
-                            movieDetail.overview
+                            movieDetail?.overview
                     }
                 </Box>
                 <Box sx={{ 
@@ -80,7 +80,7 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                                 :
                                     <Box sx={{ display: "flex" }}>
                                         <CalendarIcon sx={{ marginRight: "1rem" }}/>
-                                        <Box component={"p"}>{moment(movieDetail.release_date).format("DD/MM/YYYY")}</Box>
+                                        <Box component={"p"}>{moment(movieDetail?.release_date).format("DD/MM/YYYY")}</Box>
                                     </Box>
                             }
                         </Grid>
@@ -104,7 +104,7 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                                     <Box sx={{ display: "flex" }}>
                                         <AttachMoney sx={{ marginRight: "1rem" }}/>
                                         <Box component={"p"}>{
-                                            movieDetail.budget?.toString()
+                                            movieDetail?.budget?.toString()
                                                 .replace(/\D/g, "")
                                                 .replace(/([0-9])([0-9]{3})$/, "$1.$2")
                                                 .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ".")
@@ -120,7 +120,7 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                                 :
                                     <Box sx={{ display: "flex" }}>
                                         <Autorenew sx={{ marginRight: "1rem" }}/>
-                                        <Box component={"p"}>{movieDetail.status}</Box>
+                                        <Box component={"p"}>{movieDetail?.status}</Box>
                                     </Box>
                             }
                         </Grid>
@@ -141,8 +141,8 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                     :
                         <Box 
                             component="img" 
-                            src={`https://image.tmdb.org/t/p/w500/${movieDetail.poster_path}`} 
-                            alt={movieDetail.title}
+                            src={`https://image.tmdb.org/t/p/w500/${movieDetail?.poster_path}`} 
+                            alt={movieDetail?.title}
                             sx={{
                                 width: "100%",
                                 maxWidth: 100 * (isMobile ? 3 : 5)
