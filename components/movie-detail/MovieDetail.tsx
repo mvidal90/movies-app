@@ -40,7 +40,7 @@ export const MovieDetail = ({id} : MovieDetailProps) => {
                                 movieDetail?.title
                         }
                     </Box>
-                    <Box sx={{ marginBottom: "1rem", display: "flex"}}>
+                    <Box sx={{ marginBottom: "1rem", display: "flex", flexFlow: "wrap"}}>
                         {
                             fetching ?
                                 <>
