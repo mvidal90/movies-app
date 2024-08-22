@@ -1,3 +1,4 @@
+export * from './footer/Footer';
 
 //Clients Components
 export {Navbar} from './navbar/Navbar';

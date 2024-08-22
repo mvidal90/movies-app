@@ -41,18 +41,22 @@ export const MoviesContainer = () => {
                 :
                     <GridScheleton />
             }
-            <Pagination 
-                currentPage={moviesList.page} 
-                totalPages={moviesList.totalPages} 
-                setNewPage={
-                    (page: number) => 
-                        dispatch( 
-                            !searchBy.enabled ? 
-                                getListMovies(page)
-                            : 
-                                getFoundMovies(page)
-                        )
-                }/>
+            {
+                moviesList.page ?
+                    <Pagination 
+                        currentPage={moviesList.page} 
+                        totalPages={moviesList.totalPages} 
+                        setNewPage={
+                            (page: number) => 
+                                dispatch( 
+                                    !searchBy.enabled ? 
+                                        getListMovies(page)
+                                    : 
+                                        getFoundMovies(page)
+                                )
+                        }/>
+                : undefined
+            }
         </Grid>
     )
 };
